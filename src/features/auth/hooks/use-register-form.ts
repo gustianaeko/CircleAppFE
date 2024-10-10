@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
 import { RegisterRequestDTO, RegisterResponseDTO } from "../types/dto";
-import { apiBaseURL } from "../../../libs/api";
 
 export function useRegisterForm() {
   const {
@@ -21,11 +20,11 @@ export function useRegisterForm() {
 
   async function onSubmit(data: RegisterFormInputs) {
     try {
-      const response = await apiBaseURL.post<
+      const response = await axios.post<
         null,
         { data: RegisterResponseDTO },
         RegisterRequestDTO
-      >("/auth/register", {
+      >(`https://cirlce-app-be5.vercel.app/auth/register`, {
         email: data.email,
         fullname: data.fullname,
         password: data.password,

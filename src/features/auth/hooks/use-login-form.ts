@@ -7,7 +7,7 @@ import axios from "axios";
 import { loginRequestDTO, LoginResponseDTO } from "../types/dto";
 import { setUser } from "../../../store/auth-slice";
 import Cookies from "js-cookie";
-import { apiBaseURL } from "../../../libs/api";
+
 
 export function useLoginForm() {
   const {
@@ -24,11 +24,11 @@ export function useLoginForm() {
 
   async function onSubmit(data: LoginFormInputs) {
     try {
-      const response = await apiBaseURL.post<
+      const response = await axios.post<
         null,
         { data: LoginResponseDTO },
         loginRequestDTO
-      >("/auth/login", {
+      >(`https://cirlce-app-be5.vercel.app/auth/login`, {
         email: data.email,
         password: data.password,
       });
@@ -47,6 +47,7 @@ export function useLoginForm() {
           response: { data },
         } = error;
         console.log(error.response.data)
+        
         setError(data.details[0].path[0], {
           message: data.details[0].message,
         });
