@@ -7,6 +7,7 @@ import axios from "axios";
 import { loginRequestDTO, LoginResponseDTO } from "../types/dto";
 import { setUser } from "../../../store/auth-slice";
 import Cookies from "js-cookie";
+import { apiBaseURL } from "../../../libs/api";
 
 export function useLoginForm() {
   const {
@@ -23,11 +24,11 @@ export function useLoginForm() {
 
   async function onSubmit(data: LoginFormInputs) {
     try {
-      const response = await axios.post<
+      const response = await apiBaseURL.post<
         null,
         { data: LoginResponseDTO },
         loginRequestDTO
-      >("http://localhost:3000/auth/login", {
+      >("/auth/login", {
         email: data.email,
         password: data.password,
       });
